@@ -126,9 +126,7 @@
             };
         },
         mounted() {
-            document.addEventListener('keyup', e => {
-                if (e.keyCode === 27) this.closeMap();
-            });
+
         },
         watch: {},
         methods: {

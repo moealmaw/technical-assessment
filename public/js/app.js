@@ -33148,6 +33148,10 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
     mounted: function mounted() {
         var _this = this;
 
+        document.addEventListener('keyup', function (e) {
+            if (e.keyCode === 27) _this.closeMap();
+        });
+
         this.initMap(function () {
             _this.drawMarkers();
 
@@ -33654,7 +33658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-current w-4 h-4 block">\n<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>\n</svg>';
+var star = "<svg\nxmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" class=\"fill-current w-4 h-4 block\">\n<polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon>\n</svg>";
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ["offer"],
     data: function data() {
@@ -33662,13 +33666,7 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
             star: star
         };
     },
-    mounted: function mounted() {
-        var _this = this;
-
-        document.addEventListener('keyup', function (e) {
-            if (e.keyCode === 27) _this.closeMap();
-        });
-    },
+    mounted: function mounted() {},
 
     watch: {},
     methods: {

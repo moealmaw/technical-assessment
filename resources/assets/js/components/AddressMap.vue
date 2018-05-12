@@ -71,6 +71,10 @@
             };
         },
         mounted() {
+            document.addEventListener('keyup', e => {
+                if (e.keyCode === 27) this.closeMap();
+            });
+
             this.initMap(() => {
                 this.drawMarkers();
 
