@@ -1,6 +1,5 @@
 <template>
     <div v-show="isOpen" class="Map">
-
         <div class="Map__Close">
             <span @click="closeMap()" class="Map__CloseBtn">Close</span>
         </div>
@@ -77,29 +76,11 @@
 
             this.initMap(() => {
                 this.drawMarkers();
-
-                VueEvent.$on('PlacesMap.open', placeId => {
-                    this.openMap(placeId);
-                });
-
-                VueEvent.$on('PlacesMap.close', () => {
-                    this.closeMap();
-                });
-
+                this.registerListeners();
             });
+
         },
-        watch: {
-            activePlaceId: function (placeId) {
-                const place = this.getPlace(placeId);
-                if (!place) {
-                    return this.activePlaceId = null;
-                }
-                this.scrollToPlace(`place.${placeId}`);
-                this.map.setZoom(10);
-                this.map.panTo(place.marker.getPosition());
-                place.infoWindow.open(this.map, place.marker);
-            }
-        },
+
         methods: {
             initMap: function (cb) {
                 VueEvent.$on('GoogleMapsLib.Loaded', () => {
@@ -109,6 +90,14 @@
                         center: {lat: 0, lng: 0}
                     });
                     return cb();
+                });
+            },
+            registerListeners(){
+                VueEvent.$on('PlacesMap.open', placeId => {
+                    this.openMap(placeId);
+                });
+                VueEvent.$on('PlacesMap.close', () => {
+                    this.closeMap();
                 });
             },
             openMap: function (placeId) {
@@ -166,6 +155,18 @@
                 });
             },
 
+        },
+        watch: {
+            activePlaceId: function (placeId) {
+                const place = this.getPlace(placeId);
+                if (!place) {
+                    return this.activePlaceId = null;
+                }
+                this.scrollToPlace(`place.${placeId}`);
+                this.map.setZoom(10);
+                this.map.panTo(place.marker.getPosition());
+                place.infoWindow.open(this.map, place.marker);
+            }
         },
     };
 </script>

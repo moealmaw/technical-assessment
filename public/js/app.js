@@ -33129,7 +33129,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
-//
 
 var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="fill-current w-4 h-4 block">\n<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>\n</svg>';
 
@@ -33154,29 +33153,11 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
 
         this.initMap(function () {
             _this.drawMarkers();
-
-            VueEvent.$on('PlacesMap.open', function (placeId) {
-                _this.openMap(placeId);
-            });
-
-            VueEvent.$on('PlacesMap.close', function () {
-                _this.closeMap();
-            });
+            _this.registerListeners();
         });
     },
 
-    watch: {
-        activePlaceId: function activePlaceId(placeId) {
-            var place = this.getPlace(placeId);
-            if (!place) {
-                return this.activePlaceId = null;
-            }
-            this.scrollToPlace('place.' + placeId);
-            this.map.setZoom(10);
-            this.map.panTo(place.marker.getPosition());
-            place.infoWindow.open(this.map, place.marker);
-        }
-    },
+
     methods: {
         initMap: function initMap(cb) {
             var _this2 = this;
@@ -33190,6 +33171,17 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
                 return cb();
             });
         },
+        registerListeners: function registerListeners() {
+            var _this3 = this;
+
+            VueEvent.$on('PlacesMap.open', function (placeId) {
+                _this3.openMap(placeId);
+            });
+            VueEvent.$on('PlacesMap.close', function () {
+                _this3.closeMap();
+            });
+        },
+
         openMap: function openMap(placeId) {
             this.isOpen = true;
             this.placeFocus(placeId);
@@ -33237,28 +33229,28 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
             return scrollToPlace;
         }(),
         drawMarkers: function drawMarkers() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.markers = this.markers_list.map(function (_marker) {
                 var location = new google.maps.LatLng(_marker.latitude, _marker.longitude);
 
                 var marker = new google.maps.Marker({
                     position: location,
-                    map: _this3.map,
+                    map: _this4.map,
                     title: _marker.name
                 });
 
                 marker.addListener('click', function () {
-                    _this3.placeFocus(_marker.id);
+                    _this4.placeFocus(_marker.id);
                 });
 
                 var infoWindow = new google.maps.InfoWindow({
-                    content: _this3.$refs['marker_info.' + _marker.id][0],
+                    content: _this4.$refs['marker_info.' + _marker.id][0],
                     maxWidth: 300
                 });
 
                 google.maps.event.addListener(infoWindow, 'closeclick', function () {
-                    _this3.map.setZoom(2);
+                    _this4.map.setZoom(2);
                 });
                 return {
                     id: _marker.id,
@@ -33266,6 +33258,18 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
                     infoWindow: infoWindow
                 };
             });
+        }
+    },
+    watch: {
+        activePlaceId: function activePlaceId(placeId) {
+            var place = this.getPlace(placeId);
+            if (!place) {
+                return this.activePlaceId = null;
+            }
+            this.scrollToPlace('place.' + placeId);
+            this.map.setZoom(10);
+            this.map.panTo(place.marker.getPosition());
+            place.infoWindow.open(this.map, place.marker);
         }
     }
 });
