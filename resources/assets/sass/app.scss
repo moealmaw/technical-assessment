@@ -1,5 +1,66 @@
 //noinspection ALL
 @tailwind preflight;
 
+.drop {
+    @apply .pointer-events-none .absolute .pin-y .pin-r .flex .items-center .px-2 .text-grey-darker;
+    svg {
+        color: hidden;
+        path {
+            d: path("M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z");
+        }
+    }
+}
+
+.HomeCover {
+    background-image: url("https://ritzcarlton-h.assetsadobe.com/is/image/content/dam/the-ritz-carlton/brand/residences/Amman_rendering_residences_and_hotel.jpg?$XlargeViewport100pct$");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+
+.grid-flex {
+    @apply .flex;
+    &.grid-col {
+        @apply .flex-col;
+    }
+    &.grid-gap-2 {
+        @apply .-mx-2;
+        > .grid-cell {
+            @apply .px-2;
+        }
+    }
+    &.grid-gap-hair {
+        @apply .-mx-hair;
+        > .grid-cell {
+            @apply .px-hair;
+        }
+    }
+    &.grid-gap-1 {
+        @apply .-mx-1;
+        > .grid-cell {
+            @apply .px-1;
+        }
+    }
+
+}
+
+.obj-fit {
+    object-fit: cover;
+    &-cover {
+        object-fit: cover;
+    }
+    &-contain {
+        object-fit: cover;
+    }
+}
+
+.grid-view {
+    @apply .w-1/2;
+}
+
+.list-view {
+    @apply .w-full;
+}
+
 //noinspection ALL
 @tailwind utilities;
