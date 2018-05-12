@@ -62,5 +62,113 @@
     @apply .w-full;
 }
 
+.Map {
+    @apply .bg-black;
+    @apply .p-10;
+    @apply .pt-0;
+    @apply .fixed;
+    @apply .pin-t;
+    @apply .pin-b;
+    @apply .pin-l;
+    @apply .pin-r;
+}
+
+.Map__Close {
+    @apply .text-white;
+    @apply .font-bold;
+    @apply .uppercase;
+    @apply .text-xs;
+    @apply .text-right;
+}
+
+.Map__CloseBtn {
+    @apply .cursor-pointer;
+    @apply .my-1;
+    @apply .p-2;
+    @apply .inline-block;
+    @apply .rounded;
+    &:hover {
+        @apply .bg-grey-darkest;
+    }
+}
+
+.Map__Container {
+    @apply .flex;
+    @apply .flex-row;
+    @apply .bg-white;
+    @apply .h-full;
+    @apply .justify-center;
+    @apply .mx-auto;
+    @apply .p-3;
+}
+
+.Map__PlacesList {
+    @apply .bg-white .pr-3;
+    overflow-y: auto;
+}
+
+.Map__PlacesList__Item {
+    @apply .border-b;
+    @apply .mb-0 p-2;
+    &.active {
+        @apply .text-white;
+        @apply .bg-expedia-blue;
+        @apply .rounded;
+    }
+    > .address {
+        @apply .text-sm;
+        @apply .opacity-75;
+    }
+}
+
+.Map__Area {
+    @apply .flex-1;
+    @apply .h-full;
+}
+
+.Map__MarkerInfo__Item {
+    > .name {
+        @apply .mb-0;
+        > .stars {
+            @apply .text-expedia-yellow;
+            @apply .inline-flex;
+        }
+    }
+    > .address {
+        @apply .text-expedia-blue-dark;
+        @apply .mb-2;
+    }
+    > .image {
+        @apply .w-full;
+    }
+    > .details {
+        @apply .flex;
+        @apply .justify-between;
+        @apply .items-center;
+        > .inner {
+            @apply .flex;
+            @apply .text-xs;
+            @apply .uppercase;
+            @apply .text-expedia-blue-dark;
+            @apply .font-black;
+            > span {
+                @apply .mr-1;
+            }
+        }
+        > .book_btn {
+            @apply .bg-expedia-blue-dark;
+            @apply .text-white;
+            @apply .px-2;
+            @apply .py-2;
+            @apply .rounded;
+            @apply .font-bold;
+            &:hover {
+                @apply text-expedia-blue-dark;
+                @apply bg-expedia-yellow;
+            }
+        }
+    }
+}
+
 //noinspection ALL
 @tailwind utilities;

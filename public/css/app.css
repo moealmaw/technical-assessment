@@ -634,6 +634,246 @@ button,
   cursor: pointer;
 }
 
+.drop {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  color: #606f7b;
+}
+
+.drop svg {
+  color: hidden;
+}
+
+.drop svg path {
+  d: path("M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z");
+}
+
+.HomeCover {
+  background-image: url("https://ritzcarlton-h.assetsadobe.com/is/image/content/dam/the-ritz-carlton/brand/residences/Amman_rendering_residences_and_hotel.jpg?$XlargeViewport100pct$");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
+.grid-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.grid-flex.grid-col {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.grid-flex.grid-gap-2 {
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
+}
+
+.grid-flex.grid-gap-2 > .grid-cell {
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+.grid-flex.grid-gap-hair {
+  margin-left: -0.125rem;
+  margin-right: -0.125rem;
+}
+
+.grid-flex.grid-gap-hair > .grid-cell {
+  padding-left: .125rem;
+  padding-right: .125rem;
+}
+
+.grid-flex.grid-gap-1 {
+  margin-left: -0.25rem;
+  margin-right: -0.25rem;
+}
+
+.grid-flex.grid-gap-1 > .grid-cell {
+  padding-left: .25rem;
+  padding-right: .25rem;
+}
+
+.obj-fit {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.obj-fit-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.obj-fit-contain {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.grid-view {
+  width: 50%;
+}
+
+.list-view {
+  width: 100%;
+}
+
+.Map {
+  background-color: #22292f;
+  padding: 2.5rem;
+  padding-top: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.Map__Close {
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: .75rem;
+  text-align: right;
+}
+
+.Map__CloseBtn {
+  cursor: pointer;
+  margin-top: .25rem;
+  margin-bottom: .25rem;
+  padding: .5rem;
+  display: inline-block;
+  border-radius: .25rem;
+}
+
+.Map__CloseBtn:hover {
+  background-color: #3d4852;
+}
+
+.Map__Container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: #fff;
+  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: .75rem;
+}
+
+.Map__PlacesList {
+  background-color: #fff;
+  padding-right: .75rem;
+  overflow-y: auto;
+}
+
+.Map__PlacesList__Item {
+  border-bottom-width: 1px;
+  margin-bottom: 0;
+  padding: .5rem;
+}
+
+.Map__PlacesList__Item.active {
+  color: #fff;
+  background-color: hsl(207, 100%, 36%);
+  border-radius: .25rem;
+}
+
+.Map__PlacesList__Item > .address {
+  font-size: .875rem;
+  opacity: .75;
+}
+
+.Map__Area {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  height: 100%;
+}
+
+.Map__MarkerInfo__Item > .name {
+  margin-bottom: 0;
+}
+
+.Map__MarkerInfo__Item > .name > .stars {
+  color: hsl(48, 100%, 50%);
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+.Map__MarkerInfo__Item > .address {
+  color: hsl(206, 100%, 18%);
+  margin-bottom: .5rem;
+}
+
+.Map__MarkerInfo__Item > .image {
+  width: 100%;
+}
+
+.Map__MarkerInfo__Item > .details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.Map__MarkerInfo__Item > .details > .inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: .75rem;
+  text-transform: uppercase;
+  color: hsl(206, 100%, 18%);
+  font-weight: 900;
+}
+
+.Map__MarkerInfo__Item > .details > .inner > span {
+  margin-right: .25rem;
+}
+
+.Map__MarkerInfo__Item > .details > .book_btn {
+  background-color: hsl(206, 100%, 18%);
+  color: #fff;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  border-radius: .25rem;
+  font-weight: 700;
+}
+
+.Map__MarkerInfo__Item > .details > .book_btn:hover {
+  color: hsl(206, 100%, 18%);
+  background-color: hsl(48, 100%, 50%);
+}
+
 .container {
   width: 100%;
 }

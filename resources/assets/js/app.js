@@ -21,6 +21,7 @@ Vue.component('datepicker', require('./components/DatepickerComponent.vue'));
 Vue.component('flatPickr', require("flatpickr"));
 
 Vue.component('offers-list', require("./components/OffersListComponent.vue"));
+Vue.component('offer', require("./components/OfferComponent.vue"));
 Vue.component('address-map', require("./components/AddressMap.vue"));
 
 window.app = new Vue({
@@ -29,8 +30,8 @@ window.app = new Vue({
 
     },
     methods: {
-        initGooglePlacesAutocomplete: function () {
-            VueEvent.$emit('initGooglePlacesAutocomplete', {some: "value"});
+        GoogleMapsLibLoaded: function () {
+            VueEvent.$emit('GoogleMapsLib.Loaded', google);
         }
     },
 });
