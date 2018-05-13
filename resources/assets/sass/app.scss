@@ -54,17 +54,9 @@
     }
 }
 
-.grid-view {
-    @apply .w-1/2;
-}
-
-.list-view {
-    @apply .w-full;
-}
-
 .Map {
     @apply .bg-black;
-    @apply .p-10;
+    @apply .p-1;
     @apply .pt-0;
     @apply .fixed;
     @apply .pin-t;
@@ -73,23 +65,37 @@
     @apply .pin-r;
 }
 
+@screen md {
+    .Map {
+        @apply .p-8;
+    }
+}
+
 .Map__Close {
     @apply .text-white;
     @apply .font-bold;
     @apply .uppercase;
     @apply .text-xs;
     @apply .text-right;
+    @apply .absolute;
+    @apply .pin-r;
+    @apply .pin-t;
+    @apply .mr-2;
+    @apply .mt-2;
+    z-index: 999999;
 }
 
 .Map__CloseBtn {
     @apply .cursor-pointer;
-    @apply .my-1;
     @apply .p-2;
     @apply .inline-block;
-    @apply .rounded;
-    &:hover {
-        @apply .bg-grey-darkest;
-    }
+    @apply .rounded-full;
+    @apply .bg-grey-darkest;
+    @apply .text-xl;
+    width: 3rem;
+    height: 3rem;
+    @apply .text-center;
+
 }
 
 .Map__Container {
@@ -105,6 +111,13 @@
 .Map__PlacesList {
     @apply .bg-white .pr-3;
     overflow-y: auto;
+    @apply .hidden;
+}
+
+@screen md {
+    .Map__PlacesList {
+        @apply .block;
+    }
 }
 
 .Map__PlacesList__Item {
@@ -170,5 +183,40 @@
     }
 }
 
+@import "./tw-auto";
+
 //noinspection ALL
 @tailwind utilities;
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+@media (min-width: 576px) {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 100%;
+        max-width: 1200px;
+    }
+}

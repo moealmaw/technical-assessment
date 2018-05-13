@@ -1,0 +1,554 @@
+@media(max-width: 992px) {
+    html {
+        .Offers__List__Item {
+            @apply .w-1/2;
+            .Offer__Image__Object {
+                @apply .h-64;
+            }
+            .Offer__Body {
+                @apply .h-full;
+            }
+            .Offer__Inner {
+                @apply .h-full;
+                @apply .flex-col;
+                > .grid-cell {
+                    @apply .w-full;
+                }
+            }
+            .Offer__Details {
+                .Offer__Details__Dates {
+                    @apply .flex-wrap;
+                }
+                .Offer__Details__Dates__Line {
+                    @apply .px-2;
+                }
+            }
+            .Offer__Details__Title {
+                @apply .px-2;
+                @apply .mb-1;
+            }
+            .Offer__Details__Footer {
+                @apply .px-2;
+            }
+            .Offer__Details__Footer {
+                @apply .justify-between;
+            }
+            .Offer__Details__Footer__Box {
+                @apply .mr-0;
+            }
+            .Offer__Pricing {
+                @apply .p-2;
+                @apply .flex-row;
+                @apply .items-center;
+                @apply .justify-between;
+                @apply .w-full;
+                .Offer__Pricing__Details {
+                    @apply .mr-2;
+                }
+                .Offer__Pricing__Notice {
+                    @apply .mb-0;
+                    @apply .text-left;
+                }
+                .Offer__Pricing__Book {
+                    display: block;
+                }
+            }
+        }
+        .Offers__Top {
+            @apply .flex-wrap;
+        }
+
+        .Offers__Top__Results {
+            @apply .py-4;
+        }
+
+        .Offers__Top__Sort__View {
+            @apply .hidden;
+        }
+    }
+}
+
+@media(max-width: 768px) {
+    html {
+        .Offers__List__Item {
+            @apply .w-full;
+        }
+        .Offers__Top__Sort {
+            @apply .hidden;
+        }
+    }
+}
+
+/** #Offers__Top **/
+.Offers__Top {
+    @apply .flex;
+    @apply .items-center;
+    @apply .bg-white;
+    @apply .px-4;
+    @apply .mb-4;
+}
+
+/** #Offers__Top__Results **/
+.Offers__Top__Results {
+    @apply .flex-1;
+    @apply .items-center;
+    @apply .mr-3;
+    @apply .text-sm;
+    @apply .border-b-2;
+    @apply .border-transparent;
+    @apply .text-grey-darkest;
+}
+
+/** #endOffers__Top__Results **/
+
+/** #Offers__Top__Sort **/
+.Offers__Top__Sort {
+    @apply .flex;
+    @apply .items-center;
+    @apply .font-semibold;
+    @apply .text-xs;
+    @apply .mr-4;
+}
+
+/** #endOffers__Top__Sort **/
+
+/** #Offers__Top__Sort__Label **/
+.Offers__Top__Sort__Label {
+    @apply .mr-1;
+    @apply .border-b-2;
+    @apply .border-transparent;
+    @apply .text-grey;
+    @apply .uppercase;
+}
+
+/** #endOffers__Top__Sort__Label **/
+
+/** #Offers__Top__Sort_Btn **/
+.Offers__Top__Sort__Btn {
+    @apply .px-1;
+    @apply .mr-1;
+    @apply .no-underline;
+    @apply .text-grey-darkest;
+    @apply .border-b-2;
+    @apply .border-transparent;
+    @apply .py-4;
+}
+
+/** #endOffers__Top__Sort_Btn **/
+
+/** #Offers__Top__Sort__View **/
+.Offers__Top__Sort__View {
+    @apply .flex;
+    @apply .items-center;
+    @apply .font-semibold;
+    @apply .text-xs;
+    a {
+        @apply .ml-2;
+        @apply .text-grey-dark;
+    }
+    a.active {
+        @apply .text-expedia-blue;
+    }
+}
+
+/** #endOffers__Top__Sort__View **/
+
+/** #Offers__List **/
+.Offers__List {
+    @apply .flex;
+    @apply .flex-wrap;
+    @apply .-mx-2;
+}
+
+/** #endOffers__List **/
+
+/** #Offers__List__Item **/
+.Offers__List__Item {
+    @apply .mb-4;
+    @apply .px-2;
+}
+
+@screen md {
+    .Offers__List__Item {
+        @apply .mx-0;
+    }
+} //end-screen-md
+/** #endOffers__List__Item **/
+
+/** #Offers__List__Item--list **/
+.Offers__List__Item--list {
+    @apply .w-full;
+}
+
+/** #endOffers__List__Item--list **/
+
+/** .Offer__Body **/
+.Offer__Body {
+    /** #Offer__Body **/
+    @apply .bg-white;
+    @apply .shadow;
+    @apply .relative;
+}
+
+@screen md {
+    .Offer__Body {
+        @apply .flex-row;
+    }
+} //end-screen-md
+/** #endOffer__Body **/
+
+/** #Offer__Image **/
+.Offer__Image {
+    @apply .w-full;
+}
+
+@screen md {
+    .Offer__Image {
+        @apply .w-64;
+    }
+} //end-screen-md
+/** #endOffer__Image **/
+
+/** #Offer__Image__Object **/
+.Offer__Image__Object {
+    @apply .obj-fit-cover;
+    @apply .min-h-48;
+    @apply .block;
+    @apply .w-full;
+    @apply .relative;
+}
+
+/** #endOffer__Image__Object **/
+
+/** #Offer__Image__Object__NotFound **/
+.Offer__Image__Object__NotFound {
+    @apply .flex;
+    @apply .flex-col;
+    @apply .justify-center;
+    @apply .items-center;
+    @apply .absolute;
+    @apply .pin;
+    @apply .text-grey;
+    @apply .font-bold;
+    @apply .uppercase;
+    @apply .text-center;
+}
+
+/** #endOffer__Image__Object__NotFound **/
+
+/** #Offer__Details **/
+.Offer__Details {
+    @apply .flex;
+    @apply .flex-col;
+    @apply .px-2;
+    @apply .py-2;
+    @apply .justify-between;
+    @apply .min-h-full;
+}
+
+@screen md {
+    .Offer__Details {
+        @apply .px-0;
+        @apply .py-2;
+    }
+} //end-screen-md
+/** #endOffer__Details **/
+
+/** #Offer__Details__Dates **/
+.Offer__Details__Dates {
+    @apply .items-center;
+    @apply .mb-2;
+    span {
+        @apply .text-xs;
+        @apply .text-grey;
+        @apply .font-black;
+        @apply .uppercase;
+    }
+    span.val {
+        @apply .text-expedia-blue-dark;
+    }
+    span.low {
+        @apply .lowercase;
+    }
+}
+
+/** #endOffer__Details__Dates **/
+
+/** #Offer__Details__Title **/
+.Offer__Details__Title {
+    @apply .flex-1;
+}
+
+/** #endOffer__Details__Title **/
+
+/** #Offer__Details__HotelName **/
+.Offer__Details__HotelName {
+    @apply .text-xl;
+    @apply .text-expedia-blue-dark;
+    @apply .font-medium;
+    @apply .font-bold;
+    @apply .leading-tight;
+}
+
+/** #endOffer__Details__HotelName **/
+
+/** #Offer__Details__Subtitle **/
+.Offer__Details__HotelAddress {
+    @apply .text-sm;
+    @apply .text-grey-darker;
+    @apply .mb-2;
+}
+
+/** #endOffer__Details__Subtitle **/
+
+/** #Offer__Details__Link **/
+.Offer__Details__Link {
+    @apply .text-xs;
+    @apply .font-semibold;
+    @apply .no-underline;
+    @apply .text-expedia-blue;
+    @apply .cursor-pointer;
+}
+
+/** #endOffer__Details__Link **/
+
+/** #Offer__Details__Body **/
+.Offer__Details__Body {
+    @apply .font-semibold;
+    @apply .text-sm;
+    @apply .mb-1;
+    @apply .opacity-100;
+    @apply .text-grey-dark;
+    @apply .inline-block;
+    span {
+        @apply .text-expedia-blue;
+    }
+}
+
+/** #endOffer__Details__Body **/
+
+/** #Offer__Details__Footer **/
+.Offer__Details__Footer {
+    @apply .flex;
+    @apply .mb-0;
+}
+
+/** #endOffer__Details__Footer **/
+
+/** #Offer__Details__Footer__Box **/
+.Offer__Details__Footer__Box {
+    @apply .flex;
+    @apply .text-grey;
+    @apply .flex-col;
+    @apply .mr-4;
+    .label {
+        @apply .uppercase;
+        @apply .font-black;
+        @apply .text-xs;
+    }
+}
+
+/** #endOffer__Details__Footer__Box **/
+
+/** #Offer__Pricing **/
+.Offer__Pricing {
+    @apply .pt-8;
+    @apply .pb-4;
+    @apply .px-2;
+    @apply .flex;
+    @apply .flex-col;
+    @apply .h-full;
+    @apply .items-end;
+}
+
+/** #endOffer__Pricing **/
+
+/** #Offer__Pricing__Details **/
+.Offer__Pricing__Details {
+    @apply .flex;
+    @apply .items-center;
+}
+
+/** #endOffer__Pricing__Details **/
+
+/** #Offer__Pricing__Discount **/
+.Offer__Pricing__Discount {
+    @apply .absolute;
+    @apply .pin-t;
+    @apply .pin-r;
+    @apply .flex;
+    @apply .px-2;
+    @apply .text-xl;
+    @apply .text-expedia-blue-dark;
+    @apply .font-bold;
+    @apply .bg-expedia-yellow;
+}
+
+/** #endOffer__Pricing__Discount **/
+
+/** #Offer__Pricing__Saving **/
+.Offer__Pricing__Saving {
+    @apply .mr-1;
+    @apply .text-grey-dark;
+    @apply .line-through;
+}
+
+/** #endOffer__Pricing__Saving **/
+
+/** #Offer__Pricing__Total **/
+.Offer__Pricing__Total {
+    @apply .text-expedia-blue;
+    @apply .text-3xl;
+    @apply .mb-0;
+}
+
+/** #endOffer__Pricing__Total **/
+
+/** #Offer__Pricing__Notice **/
+.Offer__Pricing__Notice {
+    @apply .uppercase;
+    @apply .font-black;
+    @apply .text-grey;
+    @apply .text-xs;
+    @apply .text-right;
+    @apply .mb-2;
+}
+
+/** #endOffer__Pricing__Notice **/
+
+/** #Offer__Pricing__Book **/
+.Offer__Pricing__Book {
+    @apply .flex;
+    @apply .flex-1;
+    @apply .text-right;
+    a {
+        @apply .self-end;
+        @apply .inline-block;
+        @apply .bg-expedia-blue;
+        @apply .text-white;
+        @apply .no-underline;
+        @apply .font-bold;
+        @apply .py-2;
+        @apply .px-3;
+        @apply .rounded;
+        @apply .text-sm;
+        @apply .uppercase;
+        &:hover {
+            @apply .bg-expedia-yellow;
+            @apply .text-expedia-blue-dark;
+        }
+    }
+    //endhover
+}
+
+/** #endOffer__Pricing__Book **/
+
+/** #Offer__Inner **/
+.Offer__Inner {
+    @apply .flex;
+    @apply .-mx-2;
+    > .grid-cell {
+        @apply .px-2;
+    }
+}
+
+/** #endOffer__Inner **/
+
+/** #Offers__List__Item--grid **/
+.Offers__List__Item--grid {
+    @apply .w-1/2;
+    .Offer__Image__Object {
+        @apply .h-64;
+    }
+    .Offer__Body {
+        @apply .h-full;
+    }
+    .Offer__Inner {
+        @apply .h-full;
+        @apply .flex-col;
+        > .grid-cell {
+            @apply .w-full;
+        }
+    }
+    .Offer__Details {
+        .Offer__Details__Dates {
+            @apply .flex-wrap;
+        }
+        .Offer__Details__Dates__Line {
+            @apply .px-2;
+        }
+    }
+    .Offer__Details__Title {
+        @apply .px-2;
+        @apply .mb-1;
+    }
+    .Offer__Details__Footer {
+        @apply .px-2;
+    }
+    .Offer__Details__Footer {
+        @apply .justify-between;
+    }
+    .Offer__Details__Footer__Box {
+        @apply .mr-0;
+    }
+    .Offer__Pricing {
+        @apply .p-2;
+        @apply .flex-row;
+        @apply .items-center;
+        @apply .justify-between;
+        @apply .w-full;
+        .Offer__Pricing__Details {
+            @apply .mr-2;
+        }
+        .Offer__Pricing__Notice {
+            @apply .mb-0;
+            @apply .text-left;
+        }
+        .Offer__Pricing__Book {
+            display: block;
+        }
+    }
+}
+
+/** #endOffers__List__Item--grid **/
+
+/** #Main **/
+.Main {
+    @apply .px-2;
+    @apply .flex-wrap;
+}
+
+@screen xl {
+    .Main {
+        @apply .px-0;
+    }
+}
+/** #endMain **/
+
+/** #sidebar **/
+#sidebar {
+    @apply .w-full;
+    order: 2;
+}
+
+@screen lg {
+    #sidebar {
+        @apply .w-70;
+        order: 1;
+    }
+} //end-screen-lg
+/** #endsidebar **/
+
+/** #results **/
+#results {
+    order: 1;
+}
+
+@screen lg {
+    #results {
+        order: 2;
+    }
+} //end-screen-lg
+/** #endsidebar **/
+
+
