@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OfferSearchRequest;
-use App\Offers\HotelOffer;
-use App\Offers\Offer;
-use App\Offers\Offers;
+use App\Offers\OffersInterface;
 
 /**
  * Class OffersController
@@ -17,16 +15,16 @@ use App\Offers\Offers;
 class OffersController extends Controller
 {
     /**
-     * @var Offers
+     * @var OffersInterface
      */
     private $offers;
 
     /**
      * OffersController constructor.
      *
-     * @param Offers $offers
+     * @param OffersInterface $offers
      */
-    public function __construct(Offers $offers)
+    public function __construct(OffersInterface $offers)
     {
         $this->offers = $offers;
     }
@@ -40,14 +38,14 @@ class OffersController extends Controller
      */
     public function search(OfferSearchRequest $request)
     {
-        $offers = $this->offers->searchFromRequest($request->all());
+        $offers = $this->offers->searchFromRequest($request);
 
         //convert offer objects to array so they can be serialized to JSON
         $offers = $offers->map(
             function ($item) {
                 return $item->toArray();
             }
-      );
+        );
 
         return view('offers.results', compact('offers'));
     }

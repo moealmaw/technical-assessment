@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            \App\Offers\OffersInterface::class,
+            \App\Offers\Expedia\ExpediaApi::class
+        );
     }
 }

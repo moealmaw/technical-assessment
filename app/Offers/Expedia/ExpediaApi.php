@@ -1,6 +1,8 @@
 <?php
 namespace App\Offers\Expedia;
 
+use App\Http\Requests\OfferSearchRequest;
+use App\Offers\OffersInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Cookie\FileCookieJar;
 use Illuminate\Support\Collection;
@@ -13,13 +15,12 @@ use Illuminate\Support\Facades\Cache;
  *
  * @author Mohammad Almawali <moealmaw@gmail.com>
  */
-class ExpediaApi
+class ExpediaApi implements OffersInterface
 {
     /**
      * @var string
      */
     private $baseUri = "https://offersvc.expedia.com/offers/v2/";
-    //    private $baseUri = "http://expressjs.local:1818/";
     /**
      * @var Client
      */
@@ -36,8 +37,7 @@ class ExpediaApi
      */
     public function __construct(ExpediaTransformer $transformer)
     {
-        $jar = new FileCookieJar('/tmp/expedia_cookie_new', true);
-        //        dd($jar);
+        $jar               = new FileCookieJar('/tmp/expedia_cookie_new', true);
         $this->http        = new Client([
             'cookies'  => $jar,
             'base_uri' => $this->baseUri,
@@ -52,16 +52,17 @@ class ExpediaApi
     }
 
     /**
-     * @param array $params
+     * @param OfferSearchRequest $request
      *
      * @return Collection
+     * @internal param array $params
+     *
      */
-    public function searchFromRequest(Array $params): Collection
+    public function searchFromRequest(OfferSearchRequest $request): Collection
     {
+        $params      = $request->all();
         $searchQuery = $this->transformer->mapRequest($params);
         $response    = $this->makeRequest("getOffers", $searchQuery);
-
-        //        dd($response, $searchQuery);
 
         return $this->mapResponse($response['body']);
     }
