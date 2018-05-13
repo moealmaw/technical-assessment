@@ -18,7 +18,7 @@ class OffersTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function test_offers_homepage()
     {
         $response = $this->get('/offers');
 
