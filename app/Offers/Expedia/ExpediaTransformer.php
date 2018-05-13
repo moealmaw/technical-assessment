@@ -7,6 +7,7 @@ use App\Offers\Nodes\Destination;
 use App\Offers\Nodes\Hotel;
 use App\Offers\Nodes\Price;
 use App\Offers\Offer;
+use App\Offers\OffersTransformerInterface;
 use App\Utilities\DateUtilities;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -18,7 +19,7 @@ use Illuminate\Support\Collection;
  *
  * @author Mohammad Almawali <moealmaw@gmail.com>
  */
-class ExpediaTransformer
+class ExpediaTransformer implements OffersTransformerInterface
 {
     /**
      * @var array
@@ -101,7 +102,7 @@ class ExpediaTransformer
      *
      * @return array
      */
-    public function mapRequest(Array $params)
+    public function mapRequest(Array $params) : array
     {
         $apiQueryParams = [];
 
