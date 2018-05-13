@@ -28,12 +28,12 @@
         </div>
 
         <transition-group class="Offers__List" name="flip-list" tag="div">
-            <div class="Offers__List__Item" :class="gridTypeClass" :key="offer.key" v-for="(offer, i) in offers">
+            <div class="Offers__List__Item" :class="gridTypeClass" :key="offer.id" v-for="(offer, i) in offers">
                 <offer :offer="offer" :grid-type="gridType"></offer>
             </div>
         </transition-group>
 
-        <address-map ref="address_map" :markers_list="markers_list"></address-map>
+        <address-map ref="address_map" :markers_list="offers"></address-map>
 
     </div>
 </template>
@@ -53,24 +53,17 @@
             return {
                 gridIcon,
                 listIcon,
-                offers: this.dataOffers.map(e => {
-                    e.key = e.hotel.id;
-                    return e;
-                }),
                 modal: false,
-                markers_list: [],
+                offers: [],
                 active: null,
                 gridType: null,
                 gridTypeClass: null,
             };
         },
         mounted() {
-            document.addEventListener('keyup', e => {
-                if (e.keyCode === 27) this.closeMap();
-            });
-            this.gridType = 'grid';
+            this.gridType = 'list';
 
-            this.markers_list = this.makeMarkersList();
+            this.offers = this.makeMarkersList();
         },
         watch: {
             gridType: function (type) {
@@ -83,12 +76,9 @@
                 event.preventDefault();
                 this.gridType = view;
             },
-            openMap: function () {
-                this.modal = true
-            },
 
             makeMarkersList: function () {
-                return this.offers.map(offer => {
+                return this.dataOffers.map(offer => {
                     return {
                         id: offer.hotel.id,
                         name: offer.hotel.name,
@@ -98,8 +88,18 @@
                         city: offer.destination.city,
                         img: offer.hotel.imageUrl.xlarge,
                         starRating: offer.hotel.starRating,
+                        guestReviewRating: (Math.round(offer.hotel.guestReviewRating * 10) / 10),
+                        reviewTotal: offer.hotel.reviewTotal,
+                        lengthOfStay: offer.dates.lengthOfStay,
                         travelStartDate: offer.dates.travelStartDate.split('-').reverse().join('/'),
                         travelEndDate: offer.dates.travelEndDate.split('-').reverse().join('/'),
+                        priceCurrency: this.currencySymbol(offer.price.priceCurrency),
+                        pricePerNight: Math.round(offer.price.pricePerNight),
+                        priceOriginalPerNight: Math.round(offer.price.priceOriginalPerNight),
+                        priceTotal: Math.round(offer.price.priceTotal),
+                        priceTotalOriginal: Math.round(offer.price.priceOriginalPerNight) * offer.dates.lengthOfStay,
+                        totalSaving: (Math.round(offer.price.priceOriginalPerNight) * offer.dates.lengthOfStay) - Math.round(offer.price.priceTotal),
+                        pricePercentSaving: Math.round(offer.price.pricePercentSaving),
                     }
                 });
             },
@@ -132,7 +132,7 @@
             },
             orderByPrice: function () {
                 this.offers = this.offers.sort((a, b) => {
-                    if (a.price.pricePerNight > b.price.pricePerNight) {
+                    if (a.pricePerNight > b.pricePerNight) {
                         return 1;
                     }
                     return -1;
@@ -140,7 +140,7 @@
             },
             orderByGuestReviews: function () {
                 this.offers = this.offers.sort((a, b) => {
-                    if (a.hotel.guestReviewRating > b.hotel.guestReviewRating) {
+                    if (a.guestReviewRating > b.guestReviewRating) {
                         return -1;
                     }
                     return 1;
@@ -148,7 +148,7 @@
             },
             orderByHotelStars: function () {
                 this.offers = this.offers.sort((a, b) => {
-                    if (parseInt(a.hotel.starRating) > parseInt(b.hotel.starRating)) {
+                    if (parseInt(a.starRating) > parseInt(b.starRating)) {
                         return -1;
                     }
                     return 1;
@@ -156,14 +156,18 @@
             },
             orderByDiscount: function () {
                 this.offers = this.offers.sort((a, b) => {
-                    let a_total_discount = (Math.round(a.price.priceOriginalPerNight) * a.dates.lengthOfStay) - Math.round(a.price.priceTotal);
-                    let b_total_discount = (Math.round(b.price.priceOriginalPerNight) * b.dates.lengthOfStay) - Math.round(b.price.priceTotal);
-
-                    if (a_total_discount > b_total_discount) {
+                    if (a.totalSaving > b.totalSaving) {
                         return -1;
                     }
                     return 1;
                 });
+            },
+            currencySymbol: function (currency) {
+                switch (currency.toLowerCase()) {
+                    case "usd":
+                        return "$";
+                        break;
+                }
             },
         },
     };
@@ -172,10 +176,6 @@
     .active_sort {
         color: hsl(207, 100%, 36%);
         border-color: hsl(207, 100%, 36%);
-    }
-
-    .offer-item {
-        transition: all ease 1s;
     }
 
     .flip-list-move {
