@@ -1,34 +1,35 @@
 <template>
-    <div>
-        <div class="flex items-center bg-white px-4 mb-4">
-            <div class="flex-1 flex items-center">
-                <span class="mr-3 text-sm border-b-2 border-transparent text-grey-darkest">Found <strong>{{ offers.length }}</strong> {{ offers.length == 1 ? 'hotel' : 'hotels' }} for your search criteria</span>
+    <div class="Offers">
+        <div class="Offers__Top">
+            <div class="Offers__Top__Results">
+                Found <strong>{{ offers.length }}</strong> {{ offers.length == 1 ? 'hotel' : 'hotels' }} for your search
+                criteria.
             </div>
-            <div class="flex items-center font-semibold text-xs mr-4">
-                <span class="mr-1 border-b-2 border-transparent text-grey uppercase">Sort by:</span>
-                <a class="px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4" href="#"
+            <div class="Offers__Top__Sort">
+                <span class="Offers__Top__Sort__Label">Sort by:</span>
+                <a class="Offers__Top__Sort__Btn" href="#"
                    @click="orderBy('price', $event)">Price</a>
-                <a class="px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4" href="#"
+                <a class="Offers__Top__Sort__Btn" href="#"
                    @click="orderBy('discount', $event)">Discount Value</a>
-                <a class="px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4" href="#"
+                <a class="Offers__Top__Sort__Btn" href="#"
                    @click="orderBy('guest_reviews', $event)">Guest
                     Reviews</a>
-                <a class="px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4" href="#"
+                <a class="Offers__Top__Sort__Btn" href="#"
                    @click="orderBy('hotel_stars', $event)">Hotel Stars</a>
             </div>
-            <div class="flex items-center font-semibold text-xs">
-                <a href="#" class="mr-2 no-outline"
-                   :class="[gridType == 'list' ? 'text-expedia-blue' : 'text-grey-dark']"
+            <div class="Offers__Top__Sort__View">
+                <a href="#"
+                   :class="[gridType == 'list' ? 'active' : '']"
                    @click="toggleView('list', $event)" v-html="listIcon"></a>
-                <a href="#" :class="[gridType == 'grid' ? 'text-expedia-blue': 'text-grey-dark']"
+                <a href="#"
+                   :class="[gridType == 'grid' ? 'active': '']"
                    @click="toggleView('grid', $event)" v-html="gridIcon"></a>
             </div>
         </div>
 
-        <transition-group class="flex flex-wrap -mx-2" name="flip-list" tag="div">
-            <div :key="offer.key" v-for="(offer, i) in offers" :class="offer.ViewType"
-                 class="mb-4 mx-2 md:mx-0 offer-item px-2">
-                <offer :offer="offer"></offer>
+        <transition-group class="Offers__List" name="flip-list" tag="div">
+            <div class="Offers__List__Item" :class="gridTypeClass" :key="offer.key" v-for="(offer, i) in offers">
+                <offer :offer="offer" :grid-type="gridType"></offer>
             </div>
         </transition-group>
 
@@ -60,26 +61,21 @@
                 markers_list: [],
                 active: null,
                 gridType: null,
-                placeFocus: null,
+                gridTypeClass: null,
             };
         },
         mounted() {
             document.addEventListener('keyup', e => {
                 if (e.keyCode === 27) this.closeMap();
             });
-            this.gridType = 'list';
+            this.gridType = 'grid';
+
             this.markers_list = this.makeMarkersList();
         },
         watch: {
-            placeFocus: function (value) {
-                alert(value);
-            },
             gridType: function (type) {
-                let gridClasses = ['grid-view'].join(' ');
-                let listClasses = ['list-view'].join(' ');
-                this.offers.forEach(e => {
-                    e.ViewType = (type == 'grid') ? gridClasses : listClasses
-                });
+                this.gridTypeClass = (type == 'grid') ?
+                    "Offers__List__Item--grid" : "Offers__List__Item--list";
             }
         },
         methods: {
@@ -106,13 +102,6 @@
                         travelEndDate: offer.dates.travelEndDate.split('-').reverse().join('/'),
                     }
                 });
-            },
-            currencySymbol: function (currency) {
-                switch (currency.toLowerCase()) {
-                    case "usd":
-                        return "$";
-                        break;
-                }
             },
             book(elm){
                 elm.event.preventDefault();

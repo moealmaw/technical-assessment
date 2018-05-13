@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Laravel</title>
@@ -18,6 +18,7 @@
     @yield('content')
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7dKISLlbFBBiIyOpIOVjYqDBykD432LM&libraries=places&callback=app.GoogleMapsLibLoaded" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7dKISLlbFBBiIyOpIOVjYqDBykD432LM&libraries=places&callback=app.GoogleMapsLibLoaded"
+        async defer></script>
 </body>
 </html>

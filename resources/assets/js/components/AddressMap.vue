@@ -1,7 +1,7 @@
 <template>
     <div v-show="isOpen" class="Map">
         <div class="Map__Close">
-            <span @click="closeMap()" class="Map__CloseBtn">Close</span>
+            <span @click="closeMap()" class="Map__CloseBtn">+</span>
         </div>
 
         <div class="Map__Container">
@@ -141,7 +141,7 @@
 
                     const infoWindow = new google.maps.InfoWindow({
                         content: this.$refs[`marker_info.${_marker.id}`][0],
-                        maxWidth: 300
+                        maxWidth: 250
                     });
 
                     google.maps.event.addListener(infoWindow, 'closeclick', () => {
