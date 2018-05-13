@@ -2,7 +2,7 @@
     <div class="Offer__Body">
         <div class="Offer__Inner">
             <div class="Offer__Image grid-cell">
-                <object class="Offer__Image__Object" :data="offer.img"
+                <object class="Offer__Image__Object" :data="offer.hotel.imageUrl.xlarge"
                         type="image/jpeg">
                     <div class="Offer__Image__Object__NotFound">
                         <span class="text-4xl">&#x1F3E8;</span>
@@ -16,33 +16,34 @@
                         <div class="grid-cell">
                             <div class="grid-flex grid-gap-hair Offer__Details__Dates__Line">
                                 <span class="grid-cell">Dates:</span>
-                                <span class="grid-cell val">{{ offer.travelStartDate }}</span>
+                                <span class="grid-cell val">{{ offer.dates.travelStartDate.split('-').reverse().join('/') }}</span>
                                 <span class="grid-cell low">to</span>
-                                <span class="grid-cell val">{{ offer.travelEndDate}}</span>
+                                <span class="grid-cell val">{{ offer.dates.travelEndDate.split('-').reverse().join('/')}}</span>
                             </div>
                         </div>
                         <div class="grid-cell">
                             <div class="grid-flex grid-gap-hair Offer__Details__Dates__Line">
                                 <span class="grid-cell">Avg Price Per Night:</span>
 
-                                <span class="grid-cell val">{{ offer.priceCurrency }}{{ offer.pricePerNight }}</span>
+                                <span class="grid-cell val">{{ currencySymbol(offer.price.priceCurrency) }}{{ Math.round(offer.price.pricePerNight)}}</span>
 
-                                <span v-if="offer.pricePercentSaving"
-                                      class="grid-cell line-through">{{ offer.priceCurrency }}{{ offer.priceOriginalPerNight }}</span>
+                                <span v-if="offer.price.pricePercentSaving"
+                                      class="grid-cell line-through">{{ currencySymbol(offer.price.priceCurrency) }}{{ Math.round(offer.price.priceOriginalPerNight)}}</span>
 
                             </div>
                         </div>
                     </div>
                     <div class="Offer__Details__Title">
-                        <h2 class="Offer__Details__HotelName">{{offer.name }}</h2>
+                        <h2 class="Offer__Details__HotelName">{{offer.hotel.name }}</h2>
                         <p class="Offer__Details__HotelAddress">
-                            {{ offer.country }}, {{ offer.city }} <a
-                                @click="openPlaceMap(offer.id)" class="Offer__Details__Link">Address map</a>
+                            {{ offer.destination.country }}, {{ offer.destination.city }} <a
+                                @click="openPlaceMap(offer.hotel.id)" class="Offer__Details__Link">Address map</a>
                         </p>
 
                         <div class="Offer__Details__Body">
-                            <span>{{ offer.priceCurrency }}{{ offer.totalSaving }}</span>
-                            off original price on <span>{{ offer.lengthOfStay }}</span>
+                            <span>{{ currencySymbol(offer.price.priceCurrency) }}{{
+                            (Math.round(offer.price.priceOriginalPerNight) * offer.dates.lengthOfStay) - Math.round(offer.price.priceTotal)}}</span>
+                            off original price on <span>{{ offer.dates.lengthOfStay }}</span>
                             nights stay.
                         </div>
                     </div>
@@ -50,15 +51,15 @@
                     <div class="Offer__Details__Footer">
                         <div class="Offer__Details__Footer__Box">
                             <span class="label">Star Rating</span>
-                            <span class="text-expedia-yellow flex" v-html="star.repeat(offer.starRating)"></span>
+                            <span class="text-expedia-yellow flex" v-html="star.repeat(offer.hotel.starRating)"></span>
                         </div>
                         <div class="Offer__Details__Footer__Box">
                             <span class="label">Guest Rating</span>
 
-                            <div v-if="offer.reviewTotal" class="flex items-center">
-                                <span class="mr-1 text-sm font-bold text-expedia-blue">{{ offer.guestReviewRating }}/5</span>
+                            <div v-if="offer.hotel.reviewTotal" class="flex items-center">
+                                <span class="mr-1 text-sm font-bold text-expedia-blue">{{ (Math.round(offer.hotel.guestReviewRating * 10) / 10) }}/5</span>
                                 <span class="mr-1 text-xs font-bold">based on</span>
-                                <span class="mr-1 text-sm font-bold text-expedia-blue">{{ offer.reviewTotal }}</span>
+                                <span class="mr-1 text-sm font-bold text-expedia-blue">{{ offer.hotel.reviewTotal }}</span>
                                 <span class="mr-1 text-xs font-bold">reviews.</span>
                             </div>
                             <span v-else
@@ -71,21 +72,23 @@
             </div>
             <div class="grid-cell">
                 <div class="Offer__Pricing">
-                    <div v-if="offer.pricePercentSaving"
+                    <div v-if="offer.price.pricePercentSaving"
                          class="Offer__Pricing__Discount">
-                        {{ offer.pricePercentSaving }}% off
+                        {{ Math.round(offer.price.pricePercentSaving) }}% off
                     </div>
 
                     <div class="Offer__Pricing__Details">
-                        <h3 v-if="offer.pricePercentSaving" class="Offer__Pricing__Saving">
-                            {{ offer.priceCurrency }}{{offer.priceTotalOriginal}}
+                        <h3 v-if="offer.price.pricePercentSaving" class="Offer__Pricing__Saving">
+                            {{ currencySymbol(offer.price.priceCurrency) }}{{
+                            Math.round(offer.price.priceOriginalPerNight) * offer.dates.lengthOfStay}}
                         </h3>
                         <h2 class="Offer__Pricing__Total">
-                            {{ offer.priceCurrency }}{{offer.priceTotal}}
+                            {{ currencySymbol(offer.price.priceCurrency) }}{{
+                            Math.round(offer.price.priceTotal)}}
                         </h2>
                     </div>
                     <span class="Offer__Pricing__Notice">
-                            Price for {{ offer.lengthOfStay }} nights
+                            Price for {{ offer.dates.lengthOfStay }} nights
                         </span>
                     <div class="Offer__Pricing__Book">
                         <a @click="book(this)" href="#">

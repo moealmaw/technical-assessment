@@ -17,7 +17,7 @@ export default {
         };
     },
     mounted() {
-        VueEvent.$on("GoogleMapsLib.Loaded", () => this.init());
+        VueEvent.$on("initGooglePlacesAutocomplete", () => this.init());
     },
     methods: {
         init: function() {

@@ -71,7 +71,7 @@
                                         <div class="relative">
                                             <input type="number"
                                                    name="length_of_stay"
-                                                   value="{{ request('length_of_stay', 5) }}"
+                                                   value="5"
                                                    class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 rounded"
                                                    id="lengthOfStay"/>
                                         </div>
