@@ -31790,7 +31790,7 @@ var autocomplete = void 0;
     mounted: function mounted() {
         var _this = this;
 
-        VueEvent.$on("initGooglePlacesAutocomplete", function () {
+        VueEvent.$on("GoogleMapsLib.Loaded", function () {
             return _this.init();
         });
     },
@@ -32576,7 +32576,7 @@ exports = module.exports = __webpack_require__(16)(false);
 
 
 // module
-exports.push([module.i, "\n.active_sort {\n  color: hsl(207, 100%, 36%);\n  border-color: hsl(207, 100%, 36%);\n}\n.offer-item {\n  -webkit-transition: all ease 1s;\n  transition: all ease 1s;\n}\n.flip-list-move {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
+exports.push([module.i, "\n.active_sort {\n  color: hsl(207, 100%, 36%);\n  border-color: hsl(207, 100%, 36%);\n}\n.flip-list-move {\n  -webkit-transition: -webkit-transform 1s;\n  transition: -webkit-transform 1s;\n  transition: transform 1s;\n  transition: transform 1s, -webkit-transform 1s;\n}\n", ""]);
 
 // exports
 
@@ -32659,6 +32659,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 var gridIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current w-4 h-4 block">\n    <path d="M11 11v6h6v-6h-6zm0-2h6V3h-6v6zm-2 2H3v6h6v-6zm0-2V3H3v6h6zm-8 9V1h18v18H1v-1z"/>\n</svg>';
 var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="fill-current w-4 h-4 block">\n<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>\n</svg>';
@@ -32668,37 +32669,22 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
         return {
             gridIcon: gridIcon,
             listIcon: listIcon,
-            offers: this.dataOffers.map(function (e) {
-                e.key = e.hotel.id;
-                return e;
-            }),
             modal: false,
-            markers_list: [],
+            offers: [],
             active: null,
             gridType: null,
-            placeFocus: null
+            gridTypeClass: null
         };
     },
     mounted: function mounted() {
-        var _this = this;
-
-        document.addEventListener('keyup', function (e) {
-            if (e.keyCode === 27) _this.closeMap();
-        });
         this.gridType = 'list';
-        this.markers_list = this.makeMarkersList();
+
+        this.offers = this.makeMarkersList();
     },
 
     watch: {
-        placeFocus: function placeFocus(value) {
-            alert(value);
-        },
         gridType: function gridType(type) {
-            var gridClasses = ['grid-view'].join(' ');
-            var listClasses = ['list-view'].join(' ');
-            this.offers.forEach(function (e) {
-                e.ViewType = type == 'grid' ? gridClasses : listClasses;
-            });
+            this.gridTypeClass = type == 'grid' ? "Offers__List__Item--grid" : "Offers__List__Item--list";
         }
     },
     methods: {
@@ -32706,12 +32692,11 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
             event.preventDefault();
             this.gridType = view;
         },
-        openMap: function openMap() {
-            this.modal = true;
-        },
 
         makeMarkersList: function makeMarkersList() {
-            return this.offers.map(function (offer) {
+            var _this = this;
+
+            return this.dataOffers.map(function (offer) {
                 return {
                     id: offer.hotel.id,
                     name: offer.hotel.name,
@@ -32721,17 +32706,20 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
                     city: offer.destination.city,
                     img: offer.hotel.imageUrl.xlarge,
                     starRating: offer.hotel.starRating,
+                    guestReviewRating: Math.round(offer.hotel.guestReviewRating * 10) / 10,
+                    reviewTotal: offer.hotel.reviewTotal,
+                    lengthOfStay: offer.dates.lengthOfStay,
                     travelStartDate: offer.dates.travelStartDate.split('-').reverse().join('/'),
-                    travelEndDate: offer.dates.travelEndDate.split('-').reverse().join('/')
+                    travelEndDate: offer.dates.travelEndDate.split('-').reverse().join('/'),
+                    priceCurrency: _this.currencySymbol(offer.price.priceCurrency),
+                    pricePerNight: Math.round(offer.price.pricePerNight),
+                    priceOriginalPerNight: Math.round(offer.price.priceOriginalPerNight),
+                    priceTotal: Math.round(offer.price.priceTotal),
+                    priceTotalOriginal: Math.round(offer.price.priceOriginalPerNight) * offer.dates.lengthOfStay,
+                    totalSaving: Math.round(offer.price.priceOriginalPerNight) * offer.dates.lengthOfStay - Math.round(offer.price.priceTotal),
+                    pricePercentSaving: Math.round(offer.price.pricePercentSaving)
                 };
             });
-        },
-        currencySymbol: function currencySymbol(currency) {
-            switch (currency.toLowerCase()) {
-                case "usd":
-                    return "$";
-                    break;
-            }
         },
         book: function book(elm) {
             elm.event.preventDefault();
@@ -32763,7 +32751,7 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
         },
         orderByPrice: function orderByPrice() {
             this.offers = this.offers.sort(function (a, b) {
-                if (a.price.pricePerNight > b.price.pricePerNight) {
+                if (a.pricePerNight > b.pricePerNight) {
                     return 1;
                 }
                 return -1;
@@ -32771,7 +32759,7 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
         },
         orderByGuestReviews: function orderByGuestReviews() {
             this.offers = this.offers.sort(function (a, b) {
-                if (a.hotel.guestReviewRating > b.hotel.guestReviewRating) {
+                if (a.guestReviewRating > b.guestReviewRating) {
                     return -1;
                 }
                 return 1;
@@ -32779,7 +32767,7 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
         },
         orderByHotelStars: function orderByHotelStars() {
             this.offers = this.offers.sort(function (a, b) {
-                if (parseInt(a.hotel.starRating) > parseInt(b.hotel.starRating)) {
+                if (parseInt(a.starRating) > parseInt(b.starRating)) {
                     return -1;
                 }
                 return 1;
@@ -32787,14 +32775,18 @@ var listIcon = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" cla
         },
         orderByDiscount: function orderByDiscount() {
             this.offers = this.offers.sort(function (a, b) {
-                var a_total_discount = Math.round(a.price.priceOriginalPerNight) * a.dates.lengthOfStay - Math.round(a.price.priceTotal);
-                var b_total_discount = Math.round(b.price.priceOriginalPerNight) * b.dates.lengthOfStay - Math.round(b.price.priceTotal);
-
-                if (a_total_discount > b_total_discount) {
+                if (a.totalSaving > b.totalSaving) {
                     return -1;
                 }
                 return 1;
             });
+        },
+        currencySymbol: function currencySymbol(currency) {
+            switch (currency.toLowerCase()) {
+                case "usd":
+                    return "$";
+                    break;
+            }
         }
     }
 });
@@ -32809,108 +32801,84 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "Offers" },
     [
-      _c("div", { staticClass: "flex items-center bg-white px-4 mb-4" }, [
-        _c("div", { staticClass: "flex-1 flex items-center" }, [
-          _c(
-            "span",
-            {
-              staticClass:
-                "mr-3 text-sm border-b-2 border-transparent text-grey-darkest"
-            },
-            [
-              _vm._v("Found "),
-              _c("strong", [_vm._v(_vm._s(_vm.offers.length))]),
-              _vm._v(
-                " " +
-                  _vm._s(_vm.offers.length == 1 ? "hotel" : "hotels") +
-                  " for your search criteria"
-              )
-            ]
+      _c("div", { staticClass: "Offers__Top" }, [
+        _c("div", { staticClass: "Offers__Top__Results" }, [
+          _vm._v("\n            Found "),
+          _c("strong", [_vm._v(_vm._s(_vm.offers.length))]),
+          _vm._v(
+            " " +
+              _vm._s(_vm.offers.length == 1 ? "hotel" : "hotels") +
+              " for your search\n            criteria.\n        "
           )
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "flex items-center font-semibold text-xs mr-4" },
-          [
-            _c(
-              "span",
-              {
-                staticClass:
-                  "mr-1 border-b-2 border-transparent text-grey uppercase"
-              },
-              [_vm._v("Sort by:")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    _vm.orderBy("price", $event)
-                  }
+        _c("div", { staticClass: "Offers__Top__Sort" }, [
+          _c("span", { staticClass: "Offers__Top__Sort__Label" }, [
+            _vm._v("Sort by:")
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "Offers__Top__Sort__Btn",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  _vm.orderBy("price", $event)
                 }
-              },
-              [_vm._v("Price")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    _vm.orderBy("discount", $event)
-                  }
+              }
+            },
+            [_vm._v("Price")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "Offers__Top__Sort__Btn",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  _vm.orderBy("discount", $event)
                 }
-              },
-              [_vm._v("Discount Value")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    _vm.orderBy("guest_reviews", $event)
-                  }
+              }
+            },
+            [_vm._v("Discount Value")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "Offers__Top__Sort__Btn",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  _vm.orderBy("guest_reviews", $event)
                 }
-              },
-              [_vm._v("Guest\n                Reviews")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass:
-                  "px-1 mr-1 no-underline text-grey-darkest border-b-2 border-transparent py-4",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    _vm.orderBy("hotel_stars", $event)
-                  }
+              }
+            },
+            [_vm._v("Guest\n                Reviews")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "Offers__Top__Sort__Btn",
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  _vm.orderBy("hotel_stars", $event)
                 }
-              },
-              [_vm._v("Hotel Stars")]
-            )
-          ]
-        ),
+              }
+            },
+            [_vm._v("Hotel Stars")]
+          )
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "flex items-center font-semibold text-xs" }, [
+        _c("div", { staticClass: "Offers__Top__Sort__View" }, [
           _c("a", {
-            staticClass: "mr-2 no-outline",
-            class: [
-              _vm.gridType == "list" ? "text-expedia-blue" : "text-grey-dark"
-            ],
+            class: [_vm.gridType == "list" ? "active" : ""],
             attrs: { href: "#" },
             domProps: { innerHTML: _vm._s(_vm.listIcon) },
             on: {
@@ -32921,9 +32889,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("a", {
-            class: [
-              _vm.gridType == "grid" ? "text-expedia-blue" : "text-grey-dark"
-            ],
+            class: [_vm.gridType == "grid" ? "active" : ""],
             attrs: { href: "#" },
             domProps: { innerHTML: _vm._s(_vm.gridIcon) },
             on: {
@@ -32938,18 +32904,22 @@ var render = function() {
       _c(
         "transition-group",
         {
-          staticClass: "flex flex-wrap -mx-2",
+          staticClass: "Offers__List",
           attrs: { name: "flip-list", tag: "div" }
         },
         _vm._l(_vm.offers, function(offer, i) {
           return _c(
             "div",
             {
-              key: offer.key,
-              staticClass: "mb-4 mx-2 md:mx-0 offer-item px-2",
-              class: offer.ViewType
+              key: offer.id,
+              staticClass: "Offers__List__Item",
+              class: _vm.gridTypeClass
             },
-            [_c("offer", { attrs: { offer: offer } })],
+            [
+              _c("offer", {
+                attrs: { offer: offer, "grid-type": _vm.gridType }
+              })
+            ],
             1
           )
         })
@@ -32957,7 +32927,7 @@ var render = function() {
       _vm._v(" "),
       _c("address-map", {
         ref: "address_map",
-        attrs: { markers_list: _vm.markers_list }
+        attrs: { markers_list: _vm.offers }
       })
     ],
     1
@@ -33246,7 +33216,7 @@ var star = '<svg\nxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="
 
                 var infoWindow = new google.maps.InfoWindow({
                     content: _this4.$refs['marker_info.' + _marker.id][0],
-                    maxWidth: 300
+                    maxWidth: 250
                 });
 
                 google.maps.event.addListener(infoWindow, 'closeclick', function () {
@@ -33307,7 +33277,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Close")]
+          [_vm._v("+")]
         )
       ]),
       _vm._v(" "),
@@ -33646,25 +33616,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var star = "<svg\nxmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" class=\"fill-current w-4 h-4 block\">\n<polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"></polygon>\n</svg>";
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["offer"],
+    props: ["offer", "gridType"],
     data: function data() {
         return {
             star: star
@@ -33699,376 +33654,238 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "bg-white shadow" }, [
-    _c("div", { staticClass: "grid-flex grid-gap-2 flex-col md:flex-row" }, [
-      _c("div", { staticClass: "grid-cell w-full md:w-64 relative" }, [
+  return _c("div", { staticClass: "Offer__Body" }, [
+    _c("div", { staticClass: "Offer__Inner" }, [
+      _c("div", { staticClass: "Offer__Image grid-cell" }, [
         _c(
           "object",
           {
-            staticClass: "obj-fit-cover min-h-48 block w-full relative",
-            attrs: { data: _vm.offer.hotel.imageUrl.xlarge, type: "image/jpeg" }
+            staticClass: "Offer__Image__Object",
+            attrs: { data: _vm.offer.img, type: "image/jpeg" }
           },
           [_vm._m(0)]
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "grid-cell flex-1 details" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "flex flex-col py-2 px-2 md:px-0 md:py-2 justify-between min-h-full"
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "dates grid-flex grid-gap-1 items-center mb-2" },
-              [
-                _c("div", { staticClass: "grid-cell" }, [
-                  _c("div", { staticClass: "grid-flex grid-gap-hair" }, [
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "grid-cell grid-cell text-xs text-grey font-black uppercase"
-                      },
-                      [_vm._v("Dates:")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "grid-cell grid-cell text-xs uppercase text-expedia-blue-dark font-black"
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(
-                            _vm.offer.dates.travelStartDate
-                              .split("-")
-                              .reverse()
-                              .join("/")
-                          )
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "grid-cell grid-cell text-xs text-grey font-black"
-                      },
-                      [_vm._v("to")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "grid-cell grid-cell text-xs uppercase text-expedia-blue-dark font-black"
-                      },
-                      [
-                        _vm._v(
-                          _vm._s(
-                            _vm.offer.dates.travelEndDate
-                              .split("-")
-                              .reverse()
-                              .join("/")
-                          )
-                        )
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "grid-cell" }, [
-                  _c(
-                    "div",
-                    { staticClass: "grid-flex grid-gap-hair items-center" },
-                    [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "grid-cell text-xs uppercase text-grey font-black"
-                        },
-                        [_vm._v("Avg Price Per Night:")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "grid-cell text-sm uppercase text-expedia-blue-dark font-black"
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              _vm.currencySymbol(_vm.offer.price.priceCurrency)
-                            ) +
-                              _vm._s(Math.round(_vm.offer.price.pricePerNight))
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.offer.price.pricePercentSaving
-                        ? _c(
-                            "span",
-                            {
-                              staticClass:
-                                "grid-cell text-sm uppercase text-grey-dark font-black line-through"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.currencySymbol(
-                                    _vm.offer.price.priceCurrency
-                                  )
-                                ) +
-                                  _vm._s(
-                                    Math.round(
-                                      _vm.offer.price.priceOriginalPerNight
-                                    )
-                                  )
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "title flex-1" }, [
-              _c(
-                "h2",
-                {
-                  staticClass:
-                    "text-xl text-expedia-blue-dark font-medium font-bold leading-tight"
-                },
-                [_vm._v(_vm._s(_vm.offer.hotel.name))]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-sm text-grey-darker" }, [
-                _vm._v(
-                  _vm._s(_vm.offer.destination.country) +
-                    ", " +
-                    _vm._s(_vm.offer.destination.city) +
-                    "\n                        "
-                ),
+      _c("div", { staticClass: "grid-cell flex-1" }, [
+        _c("div", { staticClass: "Offer__Details" }, [
+          _c(
+            "div",
+            { staticClass: "grid-flex grid-gap-1 Offer__Details__Dates" },
+            [
+              _c("div", { staticClass: "grid-cell" }, [
                 _c(
-                  "a",
-                  {
-                    staticClass:
-                      "text-xs font-semibold no-underline text-expedia-blue cursor-pointer",
-                    on: {
-                      click: function($event) {
-                        _vm.openPlaceMap(_vm.offer.hotel.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Address\n                            map")]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "font-semibold text-sm mt-2 opacity-100 text-grey-dark inline-block"
-                },
-                [
-                  _c("span", { staticClass: "text-expedia-blue" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.currencySymbol(_vm.offer.price.priceCurrency)
-                      ) +
-                        _vm._s(
-                          Math.round(_vm.offer.price.priceOriginalPerNight) *
-                            _vm.offer.dates.lengthOfStay -
-                            Math.round(_vm.offer.price.priceTotal)
-                        ) +
-                        " "
-                    )
-                  ]),
-                  _vm._v("off\n                        original price on "),
-                  _c("span", { staticClass: "text-expedia-blue" }, [
-                    _vm._v(_vm._s(_vm.offer.dates.lengthOfStay))
-                  ]),
-                  _vm._v(
-                    "\n                        nights stay.\n                    "
-                  )
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stats flex mb-0" }, [
-              _c("div", { staticClass: "flex text-grey mr-4 flex-col" }, [
-                _c("span", { staticClass: "uppercase font-black text-xs" }, [
-                  _vm._v("Star Rating")
-                ]),
-                _vm._v(" "),
-                _c("span", {
-                  staticClass: "text-expedia-yellow flex",
-                  domProps: {
-                    innerHTML: _vm._s(
-                      _vm.star.repeat(_vm.offer.hotel.starRating)
-                    )
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "flex text-grey flex-col" }, [
-                _c(
-                  "span",
-                  { staticClass: "mr-2 uppercase font-black text-xs" },
-                  [_vm._v("Guest Rating")]
-                ),
-                _vm._v(" "),
-                _vm.offer.hotel.reviewTotal
-                  ? _c("div", { staticClass: "flex items-center" }, [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "mr-1 text-sm font-bold text-expedia-blue"
-                        },
-                        [
-                          _vm._v(
-                            _vm._s(
-                              Math.round(
-                                _vm.offer.hotel.guestReviewRating * 10
-                              ) / 10
-                            ) + "/5"
-                          )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "mr-1 text-xs font-bold" }, [
-                        _vm._v("based on")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "mr-1 text-sm font-bold text-expedia-blue"
-                        },
-                        [_vm._v(_vm._s(_vm.offer.hotel.reviewTotal))]
-                      ),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "mr-1 text-xs font-bold" }, [
-                        _vm._v("reviews.")
-                      ])
-                    ])
-                  : _c(
-                      "span",
-                      {
-                        staticClass:
-                          "mr-1 text-expedia-blue uppercase font-black text-xs"
-                      },
-                      [_vm._v("New Hotel")]
-                    )
-              ])
-            ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "grid-cell pricing min-w-48" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "relative pt-8 pb-4 px-2 flex flex-col h-full items-end"
-          },
-          [
-            _vm.offer.price.pricePercentSaving
-              ? _c(
                   "div",
                   {
                     staticClass:
-                      "discount absolute pin-t pin-r flex px-2 text-xl text-expedia-blue-dark font-bold bg-expedia-yellow"
+                      "grid-flex grid-gap-hair Offer__Details__Dates__Line"
                   },
                   [
-                    _c("span", { staticClass: "mr-1" }, [
+                    _c("span", { staticClass: "grid-cell" }, [
+                      _vm._v("Dates:")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "grid-cell val" }, [
+                      _vm._v(_vm._s(_vm.offer.travelStartDate))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "grid-cell low" }, [
+                      _vm._v("to")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "grid-cell val" }, [
+                      _vm._v(_vm._s(_vm.offer.travelEndDate))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "grid-cell" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "grid-flex grid-gap-hair Offer__Details__Dates__Line"
+                  },
+                  [
+                    _c("span", { staticClass: "grid-cell" }, [
+                      _vm._v("Avg Price Per Night:")
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "grid-cell val" }, [
                       _vm._v(
-                        _vm._s(Math.round(_vm.offer.price.pricePercentSaving)) +
-                          "%"
+                        _vm._s(_vm.offer.priceCurrency) +
+                          _vm._s(_vm.offer.pricePerNight)
                       )
                     ]),
                     _vm._v(" "),
-                    _c("span", [_vm._v("off")])
+                    _vm.offer.pricePercentSaving
+                      ? _c("span", { staticClass: "grid-cell line-through" }, [
+                          _vm._v(
+                            _vm._s(_vm.offer.priceCurrency) +
+                              _vm._s(_vm.offer.priceOriginalPerNight)
+                          )
+                        ])
+                      : _vm._e()
                   ]
                 )
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex items-center" }, [
-              _vm.offer.price.pricePercentSaving
-                ? _c(
-                    "h3",
-                    { staticClass: "mr-1 text-grey-dark line-through" },
-                    [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(
-                            _vm.currencySymbol(_vm.offer.price.priceCurrency)
-                          ) +
-                          _vm._s(
-                            Math.round(_vm.offer.price.priceOriginalPerNight) *
-                              _vm.offer.dates.lengthOfStay
-                          ) +
-                          "\n                    "
-                      )
-                    ]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c("h2", { staticClass: "text-expedia-blue text-3xl mb-0" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.currencySymbol(_vm.offer.price.priceCurrency)) +
-                    _vm._s(Math.round(_vm.offer.price.priceTotal)) +
-                    "\n                    "
-                )
               ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "Offer__Details__Title" }, [
+            _c("h2", { staticClass: "Offer__Details__HotelName" }, [
+              _vm._v(_vm._s(_vm.offer.name))
             ]),
             _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass:
-                  "uppercase font-black text-grey text-xs text-right mb-2"
-              },
-              [
-                _vm._v(
-                  "\n                        Price for " +
-                    _vm._s(_vm.offer.dates.lengthOfStay) +
-                    " nights\n                    "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "flex-1 flex" }, [
+            _c("p", { staticClass: "Offer__Details__HotelAddress" }, [
+              _vm._v(
+                "\n                        " +
+                  _vm._s(_vm.offer.country) +
+                  ", " +
+                  _vm._s(_vm.offer.city) +
+                  " "
+              ),
               _c(
                 "a",
                 {
-                  staticClass:
-                    "self-end inline-block bg-expedia-blue text-white hover:bg-expedia-yellow hover:text-expedia-blue-dark no-underline font-bold py-2 px-3 rounded text-sm uppercase",
-                  attrs: { href: "#" },
+                  staticClass: "Offer__Details__Link",
                   on: {
                     click: function($event) {
-                      _vm.book(this)
+                      _vm.openPlaceMap(_vm.offer.id)
                     }
                   }
                 },
-                [_vm._v("\n                        Book\n                    ")]
+                [_vm._v("Address map")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "Offer__Details__Body" }, [
+              _c("span", [
+                _vm._v(
+                  _vm._s(_vm.offer.priceCurrency) +
+                    _vm._s(_vm.offer.totalSaving)
+                )
+              ]),
+              _vm._v("\n                        off original price on "),
+              _c("span", [_vm._v(_vm._s(_vm.offer.lengthOfStay))]),
+              _vm._v(
+                "\n                        nights stay.\n                    "
               )
             ])
-          ]
-        )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "Offer__Details__Footer" }, [
+            _c("div", { staticClass: "Offer__Details__Footer__Box" }, [
+              _c("span", { staticClass: "label" }, [_vm._v("Star Rating")]),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "text-expedia-yellow flex",
+                domProps: {
+                  innerHTML: _vm._s(_vm.star.repeat(_vm.offer.starRating))
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "Offer__Details__Footer__Box" }, [
+              _c("span", { staticClass: "label" }, [_vm._v("Guest Rating")]),
+              _vm._v(" "),
+              _vm.offer.reviewTotal
+                ? _c("div", { staticClass: "flex items-center" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "mr-1 text-sm font-bold text-expedia-blue"
+                      },
+                      [_vm._v(_vm._s(_vm.offer.guestReviewRating) + "/5")]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "mr-1 text-xs font-bold" }, [
+                      _vm._v("based on")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "mr-1 text-sm font-bold text-expedia-blue"
+                      },
+                      [_vm._v(_vm._s(_vm.offer.reviewTotal))]
+                    ),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "mr-1 text-xs font-bold" }, [
+                      _vm._v("reviews.")
+                    ])
+                  ])
+                : _c(
+                    "span",
+                    {
+                      staticClass:
+                        "mr-1 text-expedia-blue uppercase font-black text-xs"
+                    },
+                    [_vm._v("New Hotel")]
+                  )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "grid-cell" }, [
+        _c("div", { staticClass: "Offer__Pricing" }, [
+          _vm.offer.pricePercentSaving
+            ? _c("div", { staticClass: "Offer__Pricing__Discount" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.offer.pricePercentSaving) +
+                    "% off\n                "
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "Offer__Pricing__Details" }, [
+            _vm.offer.pricePercentSaving
+              ? _c("h3", { staticClass: "Offer__Pricing__Saving" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.offer.priceCurrency) +
+                      _vm._s(_vm.offer.priceTotalOriginal) +
+                      "\n                    "
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("h2", { staticClass: "Offer__Pricing__Total" }, [
+              _vm._v(
+                "\n                        " +
+                  _vm._s(_vm.offer.priceCurrency) +
+                  _vm._s(_vm.offer.priceTotal) +
+                  "\n                    "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "Offer__Pricing__Notice" }, [
+            _vm._v(
+              "\n                        Price for " +
+                _vm._s(_vm.offer.lengthOfStay) +
+                " nights\n                    "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "Offer__Pricing__Book" }, [
+            _c(
+              "a",
+              {
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    _vm.book(this)
+                  }
+                }
+              },
+              [_vm._v("\n                        Book\n                    ")]
+            )
+          ])
+        ])
       ])
     ])
   ])
@@ -34078,18 +33895,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "flex flex-col justify-center items-center absolute pin text-md text-grey font-bold uppercase text-center"
-      },
-      [
-        _c("span", { staticClass: "text-4xl" }, [_vm._v("🏨")]),
-        _vm._v(" "),
-        _c("span", [_vm._v("No Photo")])
-      ]
-    )
+    return _c("div", { staticClass: "Offer__Image__Object__NotFound" }, [
+      _c("span", { staticClass: "text-4xl" }, [_vm._v("🏨")]),
+      _vm._v(" "),
+      _c("span", [_vm._v("No Photo")])
+    ])
   }
 ]
 render._withStripped = true
