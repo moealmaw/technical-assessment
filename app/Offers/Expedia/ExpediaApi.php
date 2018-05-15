@@ -98,8 +98,6 @@ class ExpediaApi implements OffersInterface
         } catch (\Exception $e) {
             throw new ApiException($this->exceptionMessage($e));
         }
-
-
     }
 
     /**
