@@ -39,7 +39,7 @@
                             <span class="text-grey lowercase">to</span>
                             <span>{{ place.travelEndDate}}</span>
                         </div>
-                        <button @click="$parent.book()" class="book_btn">
+                        <button @click="$parent.book(this)" class="book_btn">
                             Book
                         </button>
                     </div>
@@ -148,6 +148,7 @@
 
                     google.maps.event.addListener(infoWindow, 'closeclick', () => {
                         this.map.setZoom(2);
+                        this.activePlaceId = null;
                     });
                     return {
                         id: _marker.id,
