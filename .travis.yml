@@ -9,5 +9,5 @@ before_script:
   - composer install --no-interaction
 
 script:
-  - php artisan key:generate
+  - php artisan key:generate --force
   - vendor/bin/phpunit --testdox
