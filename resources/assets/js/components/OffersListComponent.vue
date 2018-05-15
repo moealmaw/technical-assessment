@@ -90,6 +90,7 @@
                         starRating: offer.hotel.starRating,
                         guestReviewRating: (Math.round(offer.hotel.guestReviewRating * 10) / 10),
                         reviewTotal: offer.hotel.reviewTotal,
+                        reviewScore: Math.round(offer.hotel.guestReviewRating * offer.hotel.reviewTotal),
                         lengthOfStay: offer.dates.lengthOfStay,
                         travelStartDate: offer.dates.travelStartDate.split('-').reverse().join('/'),
                         travelEndDate: offer.dates.travelEndDate.split('-').reverse().join('/'),
@@ -140,10 +141,11 @@
             },
             orderByGuestReviews: function () {
                 this.offers = this.offers.sort((a, b) => {
-                    if (a.guestReviewRating > b.guestReviewRating) {
-                        return -1;
+                    let n =  b.guestReviewRating - a.guestReviewRating;
+                    if (n != 0) {
+                        return n;
                     }
-                    return 1;
+                    return b.reviewScore - a.reviewScore;
                 });
             },
             orderByHotelStars: function () {
