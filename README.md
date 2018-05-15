@@ -3,7 +3,7 @@
 ## Demo
 The Application can be accessed through this link http://gentle-inlet-28691.herokuapp.com/
 
-More technical details about the app is documented in [ABOUT.md](https://github.com/moealmaw/technical-assessment/blob/master/ABOUT.md "ABOUT.md")
+> More technical details about the app is documented in [ABOUT.md](https://github.com/moealmaw/technical-assessment/blob/master/ABOUT.md "ABOUT.md")
 
 ### Requirements
 
