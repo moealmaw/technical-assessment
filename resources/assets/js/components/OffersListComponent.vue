@@ -86,7 +86,7 @@
                         longitude: offer.hotel.longitude,
                         country: offer.destination.country,
                         city: offer.destination.city,
-                        img: offer.hotel.imageUrl.xlarge,
+                        img: offer.hotel.imageUrl.large,
                         starRating: offer.hotel.starRating,
                         guestReviewRating: (Math.round(offer.hotel.guestReviewRating * 10) / 10),
                         reviewTotal: offer.hotel.reviewTotal,
