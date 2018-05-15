@@ -12,27 +12,15 @@
         props: ['classname', 'defaultDate'],
         data () {
             return {
-                date: null,
-                minTripStartDate: null,
+                date: this.defaultDate,
+                minTripStartDate: this.defaultDate,
                 maxTripStartDate: null,
                 config: {
                     altFormat: "Y-m-d",
                     altInput: true,
                     minDate: "today",
-                    defaultDate: this.date || today,
+                    defaultDate: this.defaultDate || today,
                     dateFormat: "Y-m-d"
-                }
-            }
-        },
-        mounted() {
-            this.setSelectedDate();
-        },
-        methods: {
-            setSelectedDate: function () {
-                try{
-                    this.date = new Date(this.defaultDate).toISOString();
-                }
-                catch (err){
                 }
             }
         },
