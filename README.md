@@ -40,6 +40,21 @@ Once that is completed, you can run the built-in server using the following comm
 To compile the front-end components and assets, you will need to have Node JS and NPM, installed. More about that inside the - [package.json](https://github.com/moealmaw/technical-assessment/blob/master/package.json "package.json") file. 
 
 
+### Screenshots
+
+##### Home view
+[![Home view](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-Shot-Home.jpg "Home view")](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-Shot-Home.jpg "Home view")
+
+##### Results view
+[![](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-Shot-Results.jpg)](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-Shot-Results.jpg)
+
+##### Map View
+[![](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-Shot-Map.jpg)](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-Shot-Map.jpg)
+
+##### Responsive view
+[![Responsive view](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-shot-responsive-view.jpg "Responsive view")]([![](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-shot-responsive-view.jpg)](https://github.com/moealmaw/technical-assessment/blob/master/screen-shots/Screen-shot-responsive-view.jpg) "Responsive view")
+
+
 
 
 
