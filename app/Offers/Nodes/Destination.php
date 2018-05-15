@@ -37,14 +37,6 @@ class Destination
     private $shortName;
 
     /**
-     * @return mixed
-     */
-    public function getRegionId()
-    {
-        return $this->regionId;
-    }
-
-    /**
      * @param mixed $regionId
      *
      * @return $this
@@ -54,14 +46,6 @@ class Destination
         $this->regionId = $regionId;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCountry()
-    {
-        return $this->country;
     }
 
     /**
@@ -77,14 +61,6 @@ class Destination
     }
 
     /**
-     * @return mixed
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
      * @param mixed $city
      *
      * @return $this
@@ -97,14 +73,6 @@ class Destination
     }
 
     /**
-     * @return mixed
-     */
-    public function getLongName()
-    {
-        return $this->longName;
-    }
-
-    /**
      * @param mixed $longName
      *
      * @return $this
@@ -114,14 +82,6 @@ class Destination
         $this->longName = $longName;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getShortName()
-    {
-        return $this->shortName;
     }
 
     /**

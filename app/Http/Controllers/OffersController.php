@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ApiException;
 use App\Http\Requests\OfferSearchRequest;
 use App\Offers\OffersInterface;
+use Illuminate\Support\Collection;
 
 /**
  * Class OffersController
@@ -38,14 +40,20 @@ class OffersController extends Controller
      */
     public function search(OfferSearchRequest $request)
     {
-        $offers = $this->offers->searchFromRequest($request);
+        try {
+            $offers = $this->offers->searchFromRequest($request);
+        } catch (\Exception $exception) {
+            return view('offers.results', [
+                "exceptionMessage" => $exception->getMessage(),
+                "exceptionCode"    => $exception->getCode(),
+            ]);
+        }
 
         //convert offer objects to array so they can be serialized to JSON
-        $offers = $offers->map(
-            function ($item) {
-                return $item->toArray();
-            }
-        );
+        $offers = $offers->map(function ($item) {
+            /** @var $item Collection */
+            return $item->toArray();
+        });
 
         return view('offers.results', compact('offers'));
     }

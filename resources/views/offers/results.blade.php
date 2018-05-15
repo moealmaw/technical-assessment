@@ -18,14 +18,15 @@
                                 <div class="flex flex-wrap -mx-3">
                                     <div class="w-full px-3">
                                         <span class="inline-block text-expedia-blue-dark text-lg font-bold">Search Offers</span>
-                                        <hr class="border-grey-lighter border mb-4 relative" />
+                                        <hr class="border-grey-lighter border mb-4 relative"/>
                                     </div>
                                     <div class="w-full px-3 mb-4">
                                         <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
                                                for="destination-city">
                                             Destination City
                                         </label>
-                                        <google-places-picker value="{{ request('destination_name') }}" id="destination-city"
+                                        <google-places-picker value="{{ request('destination_name') }}"
+                                                              id="destination-city"
                                                               className="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4">
                                         </google-places-picker>
                                     </div>
@@ -37,7 +38,9 @@
                                             Travel Date
                                         </label>
                                         <div class="relative">
-                                            <datepicker default-date="{{ request('trip_date') }}" id="datepicker"></datepicker>
+                                            <datepicker
+                                                    default-date="{{ request('trip_date', Carbon\Carbon::now()->format('Y-m-d')) }}"
+                                                    id="datepicker"></datepicker>
                                             <div class="drop">
                                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                                      viewBox="0 0 20 20">
@@ -56,17 +59,26 @@
                                         <div class="relative">
                                             <select name="flexibility" id="flexibility"
                                                     class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 rounded">
-                                                <option {{ request('flexibility') == 3 ? 'selected' : '' }} value="3">-/+ 3 Days</option>
-                                                <option {{ request('flexibility') == 5 ? 'selected' : '' }} value="5">-/+ 5 Days</option>
-                                                <option {{ request('flexibility') == 7 ? 'selected' : '' }} value="7">-/+ 7 Days</option>
-                                                <option {{ request('flexibility') == 0 ? 'selected' : '' }} value="0">Exact Date</option>
+                                                <option {{ request('flexibility') == 3 ? 'selected' : '' }} value="3">
+                                                    -/+ 3 Days
+                                                </option>
+                                                <option {{ request('flexibility') == 5 ? 'selected' : '' }} value="5">
+                                                    -/+ 5 Days
+                                                </option>
+                                                <option {{ request('flexibility') == 7 ? 'selected' : '' }} value="7">
+                                                    -/+ 7 Days
+                                                </option>
+                                                <option {{ request('flexibility') == 0 ? 'selected' : '' }} value="0">
+                                                    Exact Date
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="w-full px-1 mb-4">
                                         <label class="block uppercase w-full tracking-wide text-grey-darker text-xs font-bold mb-2"
                                                for="lengthOfStay">
-                                            Length of stay <small>days</small>
+                                            Length of stay
+                                            <small>days</small>
                                         </label>
                                         <div class="relative">
                                             <input type="number"
@@ -79,7 +91,8 @@
                                 </div>
                                 <div class="flex flex-wrap -mx-1 flex-row-reverse">
                                     <div class="w-full px-1">
-                                        <button type="submit" class="w-full shadow bg-expedia-blue hover:bg-expedia-blue-dark text-white font-bold py-2 px-4 rounded text-lg">
+                                        <button type="submit"
+                                                class="w-full shadow bg-expedia-blue hover:bg-expedia-blue-dark text-white font-bold py-2 px-4 rounded text-lg">
                                             Search
                                         </button>
                                     </div>
@@ -88,7 +101,11 @@
                         </div>
                     </aside>
                     <section id="results" class="grid-cell flex-1">
-                        <offers-list :data-offers="{{ $offers }}"></offers-list>
+                        @if(isset($exceptionMessage))
+                            <h3 class="bg-red-lightest border border-red-lighter p-3 text-red">{{ $exceptionMessage }}</h3>
+                        @elseif(isset($offers))
+                            <offers-list :data-offers="{{ $offers }}"></offers-list>
+                        @endif
                     </section>
                 </div>
             </div>

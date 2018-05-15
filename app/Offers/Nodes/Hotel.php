@@ -52,14 +52,6 @@ class Hotel
     private $imageUrl;
 
     /**
-     * @return mixed
-     */
-    public function getStreetAddress()
-    {
-        return $this->streetAddress;
-    }
-
-    /**
      * @param mixed $streetAddress
      *
      * @return $this
@@ -69,14 +61,6 @@ class Hotel
         $this->streetAddress = $streetAddress;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -92,14 +76,6 @@ class Hotel
     }
 
     /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @param mixed $name
      *
      * @return $this
@@ -109,14 +85,6 @@ class Hotel
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLatitude()
-    {
-        return $this->latitude;
     }
 
     /**
@@ -132,14 +100,6 @@ class Hotel
     }
 
     /**
-     * @return mixed
-     */
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
-
-    /**
      * @param mixed $longitude
      *
      * @return $this
@@ -149,14 +109,6 @@ class Hotel
         $this->longitude = $longitude;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStarRating()
-    {
-        return $this->starRating;
     }
 
     /**
@@ -172,14 +124,6 @@ class Hotel
     }
 
     /**
-     * @return mixed
-     */
-    public function getGuestReviewRating()
-    {
-        return $this->guestReviewRating;
-    }
-
-    /**
      * @param mixed $guestReviewRating
      *
      * @return $this
@@ -192,14 +136,6 @@ class Hotel
     }
 
     /**
-     * @return mixed
-     */
-    public function getReviewTotal()
-    {
-        return $this->reviewTotal;
-    }
-
-    /**
      * @param mixed $reviewTotal
      *
      * @return $this
@@ -209,14 +145,6 @@ class Hotel
         $this->reviewTotal = $reviewTotal;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImageUrl()
-    {
-        return $this->imageUrl;
     }
 
     /**

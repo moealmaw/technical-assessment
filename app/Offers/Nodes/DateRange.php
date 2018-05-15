@@ -29,15 +29,6 @@ class DateRange
     private $lengthOfStay;
 
     /**
-     * @return mixed
-     */
-    public function getTravelStartDate()
-    {
-        return $this->travelStartDate;
-    }
-
-
-    /**
      * @param $travelStartDate
      *
      * @return $this
@@ -50,15 +41,6 @@ class DateRange
     }
 
     /**
-     * @return mixed
-     */
-    public function getTravelEndDate()
-    {
-        return $this->travelEndDate;
-    }
-
-
-    /**
      * @param $travelEndDate
      *
      * @return $this
@@ -69,15 +51,6 @@ class DateRange
 
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getLengthOfStay()
-    {
-        return $this->lengthOfStay;
-    }
-
 
     /**
      * @param $lengthOfStay

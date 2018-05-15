@@ -25,12 +25,4 @@ trait ToArrayToJson
             return $value;
         }, get_object_vars($this));
     }
-
-    /**
-     * @return string
-     */
-    public function toJson()
-    {
-        return \GuzzleHttp\json_encode($this->toArray());
-    }
 }

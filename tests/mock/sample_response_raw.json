@@ -1,0 +1,77 @@
+{
+  "offerInfo": {
+    "siteID": "1",
+    "language": "en_US",
+    "currency": "USD",
+    "userSelectedCurrency": "USD"
+  },
+  "userInfo": {
+    "persona": {
+      "personaType": "OTHERS"
+    },
+    "userId": "foo"
+  },
+  "offers": {
+    "Hotel": [
+      {
+	"offerDateRange": {
+	  "travelStartDate": [
+	    2018,
+	    10,
+	    12
+	  ],
+	  "travelEndDate": [
+	    2018,
+	    10,
+	    15
+	  ],
+	  "lengthOfStay": 3
+	},
+	"destination": {
+	  "regionID": "178293",
+	  "associatedMultiCityRegionId": "178293",
+	  "longName": "New York (and vicinity), New York, United States of America",
+	  "shortName": "New York",
+	  "country": "United States of America",
+	  "province": "New York",
+	  "city": "New York",
+	  "tla": "NYC",
+	  "nonLocalizedCity": "New York"
+	},
+	"hotelInfo": {
+	  "hotelId": "21567876",
+	  "hotelName": "Manhattan",
+	  "localizedHotelName": "Manhattan",
+	  "hotelDestination": "New York",
+	  "hotelDestinationRegionID": "2621",
+	  "hotelLongDestination": "New York,NY,USA",
+	  "hotelStreetAddress": "4768 Broadway",
+	  "hotelCity": "New York",
+	  "hotelProvince": "NY",
+	  "hotelCountryCode": "USA",
+	  "hotelLatitude": 40.86641,
+	  "hotelLongitude": -73.9244,
+	  "hotelStarRating": "3.0",
+	  "hotelGuestReviewRating": 2.0,
+	  "hotelReviewTotal": 3,
+	  "hotelImageUrl": "https://images.trvl-media.com/hotels/22000000/21570000/21567900/21567876/54d7ffad_t.jpg",
+	  "vipAccess": false,
+	  "isOfficialRating": false
+	},
+	"hotelPricingInfo": {
+	  "averagePriceValue": 95.99,
+	  "totalPriceValue": 287.97,
+	  "crossOutPriceValue": 159.99,
+	  "originalPricePerNight": 159.99,
+	  "currency": "USD",
+	  "percentSavings": 40.0,
+	  "drr": false
+	},
+	"hotelUrls": {
+	  "hotelInfositeUrl": "https%3A%2F%2Fwww.expedia.com%2Fgo%2Fhotel%2Finfo%2F21567876%2F2018-10-12%2F2018-10-15",
+	  "hotelSearchResultUrl": "https%3A%2F%2Fwww.expedia.com%2Fgo%2Fhotel%2Fsearch%2FDestination%2F2018-10-12%2F2018-10-15%3FSearchType%3DDestination%26CityName%3DNew+York%26RegionId%3D178293%26Selected%3D21567876"
+	}
+      }
+    ]
+  }
+}

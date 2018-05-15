@@ -39,7 +39,7 @@
                             Travel Date
                         </label>
                         <div class="relative">
-                            <datepicker default-date="{{ old('tripDate') }}" id="datepicker"></datepicker>
+                            <datepicker default-date="{{ old('trip_date', Carbon\Carbon::now()->format('Y-m-d')) }}" id="datepicker"></datepicker>
                             <div class="drop">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 20 20">

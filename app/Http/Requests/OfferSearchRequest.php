@@ -63,7 +63,7 @@ class OfferSearchRequest extends FormRequest
         return [
             'trip_date'      => sprintf('nullable|after_or_equal:%s', Carbon::now()->toDateString()),
             'flexibility'    => ['nullable', Rule::in([0, 3, 5, 7])],
-            'length_of_stay' => ['nullable', 'integer', 'max:29'],
+            'length_of_stay' => ['nullable', 'integer', 'min:1', 'max:29'],
         ];
     }
 }
