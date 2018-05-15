@@ -19,4 +19,9 @@ mix.js('resources/assets/js/app.js', 'public/js')
         purifyCss: true,
         postCss: [tailwindcss('resources/assets/js/tailwind.js')],
     });
+mix.options({
+    processCssUrls: false,
+    purifyCss: true,
+    postCss: [tailwindcss('resources/assets/js/tailwind.js')],
+});
 mix.version();
