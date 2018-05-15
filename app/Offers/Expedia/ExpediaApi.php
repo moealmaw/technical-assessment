@@ -4,9 +4,7 @@ namespace App\Offers\Expedia;
 use App\Http\Requests\OfferSearchRequest;
 use App\Offers\OffersInterface;
 use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\FileCookieJar;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Cache;
 
 /**
  * Class ExpediaApi
@@ -35,19 +33,7 @@ class ExpediaApi implements OffersInterface
      *
      * @param ExpediaTransformer $transformer
      */
-    public function __construct(ExpediaTransformer $transformer)
     {
-        $jar               = new FileCookieJar('/tmp/expedia_cookie_new', true);
-        $this->http        = new Client([
-            'cookies'  => $jar,
-            'base_uri' => $this->baseUri,
-            'headers'  => [
-                'user-agent'      => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
-                'accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-                'accept-encoding' => 'gzip, deflate, br',
-                'accept-language' => 'en-GB,en;q=0.9,en-US;q=0.8,ar;q=0.7',
-            ],
-        ]);
         $this->transformer = $transformer;
     }
 
