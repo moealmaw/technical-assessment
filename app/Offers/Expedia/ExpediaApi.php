@@ -151,6 +151,7 @@ class ExpediaApi implements OffersInterface
     /**
      * @param \Exception $exception
      *
+     * @return string
      * @throws \Exception
      */
     private function exceptionMessage(\Exception $exception)
