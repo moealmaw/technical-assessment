@@ -119,11 +119,13 @@
                     return m.id == placeId
                 });
             },
-            scrollToPlace: async function (elmId) {
-                (document.getElementById(elmId) || {}).scrollIntoView({
-                    behavior: "smooth",
-                    block: "center",
-                });
+            scrollToPlace: function (elmId) {
+                this.$nextTick(() => {
+                    (document.getElementById(elmId) || {}).scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                    });
+                })
             },
             drawMarkers(){
                 this.markers = this.markers_list.map(_marker => {
