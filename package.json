@@ -21,6 +21,7 @@
     "vue-flatpickr-component": "^7.0.0"
   },
   "dependencies": {
+    "laravel-mix-purgecss": "^2.1.0",
     "npm": "^6.0.0"
   }
 }
