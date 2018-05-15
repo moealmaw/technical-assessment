@@ -213,6 +213,7 @@
 .Offer__Image__Object {
     @apply .obj-fit-cover;
     @apply .min-h-48;
+    @apply .max-h-64;
     @apply .block;
     @apply .w-full;
     @apply .relative;
