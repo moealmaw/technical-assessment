@@ -48,7 +48,6 @@ class ExpediaApi implements OffersInterface
     {
         $params      = $request->all();
         $searchQuery = $this->transformer->mapRequest($params);
-        $response    = $this->makeRequest("getOffers", $searchQuery);
 
         return $this->mapResponse($response['body']);
     }
@@ -74,28 +73,14 @@ class ExpediaApi implements OffersInterface
      * @param $path
      * @param array $query
      *
-     * @return mixed
-     * @throws \Exception
      */
     private function makeRequest($path, Array $query): array
     {
         $queryString = http_build_query(array_filter($query));
         try {
-            $response = Cache::remember($queryString/*cache key*/, 720000, function () use ($path, $queryString) {
-                $httpCall = $this->http->get($path, ['query' => $queryString]);
 
-                return [
-                    "cache_key"   => $queryString,
-                    "status_code" => $httpCall->getStatusCode(),
-                    "headers"     => $httpCall->getHeaders(),
-                    "body"        => $httpCall->getBody()->getContents(),
-                ];
-            });
 
-            return $response;
-        } catch (\Exception $exception) {
 
-            throw $exception;
         }
     }
 }
