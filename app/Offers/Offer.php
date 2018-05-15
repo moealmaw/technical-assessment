@@ -38,27 +38,11 @@ class Offer
     private $hotel;
 
     /**
-     * @return DateRange
-     */
-    public function getDates(): DateRange
-    {
-        return $this->dates;
-    }
-
-    /**
      * @param DateRange $dates
      */
     public function setDates(DateRange $dates)
     {
         $this->dates = $dates;
-    }
-
-    /**
-     * @return Destination
-     */
-    public function getDestination(): Destination
-    {
-        return $this->destination;
     }
 
     /**
@@ -70,27 +54,11 @@ class Offer
     }
 
     /**
-     * @return Price
-     */
-    public function getPrice(): Price
-    {
-        return $this->price;
-    }
-
-    /**
      * @param Price $price
      */
     public function setPrice(Price $price)
     {
         $this->price = $price;
-    }
-
-    /**
-     * @return Hotel
-     */
-    public function getHotel(): Hotel
-    {
-        return $this->hotel;
     }
 
     /**

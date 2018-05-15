@@ -37,15 +37,6 @@ class Price
 
 
     /**
-     * @return mixed
-     */
-    public function getPricePerNight()
-    {
-        return $this->pricePerNight;
-    }
-
-
-    /**
      * @param $pricePerNight
      *
      * @return $this
@@ -56,15 +47,6 @@ class Price
 
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getPriceOriginalPerNight()
-    {
-        return $this->priceOriginalPerNight;
-    }
-
 
     /**
      * @param $priceOriginalPerNight
@@ -79,15 +61,6 @@ class Price
     }
 
     /**
-     * @return mixed
-     */
-    public function getPriceTotal()
-    {
-        return $this->priceTotal;
-    }
-
-
-    /**
      * @param $priceTotal
      *
      * @return $this
@@ -97,14 +70,6 @@ class Price
         $this->priceTotal = $priceTotal;
 
         return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPriceCurrency()
-    {
-        return $this->priceCurrency;
     }
 
 
@@ -119,15 +84,6 @@ class Price
 
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getPricePercentSaving()
-    {
-        return $this->pricePercentSaving;
-    }
-
 
     /**
      * @param $pricePercentSaving
